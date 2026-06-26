@@ -1,0 +1,13 @@
+.env
+.env.*
+!.env.example
+.venv/
+__pycache__/
+*.egg-info/
+.langgraph_api/
+docs/
+*.pem
+*.key
+*.crt
+credentials.json
+.DS_Store
