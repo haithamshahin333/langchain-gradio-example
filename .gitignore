@@ -6,6 +6,7 @@ __pycache__/
 *.egg-info/
 .langgraph_api/
 docs/
+.github/instructions/
 *.pem
 *.key
 *.crt
