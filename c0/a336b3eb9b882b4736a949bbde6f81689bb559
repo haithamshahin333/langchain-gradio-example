@@ -1,0 +1,33 @@
+.gitignore
+  s_1b20c4ed9cc52a::t_f34b709f77bd3b 8
+  s_1b20c4ed9cc52a::t_adbcbef1d74bc3 5-7
+  s_1b20c4ed9cc52a::t_019c2b9b326eaa 9-11
+README.md
+  s_1b20c4ed9cc52a::t_8c7fe6d6e61cfd 151-152
+  s_1b20c4ed9cc52a::t_88b900658741db 195-222
+  s_1b20c4ed9cc52a::t_fa3e690c9af574 182
+  s_1b20c4ed9cc52a::t_f978cbd243acd8 148-150
+  s_1b20c4ed9cc52a::t_303ae35cd4b113 153-155,179-181
+  s_1b20c4ed9cc52a::t_bcbab0a665802c 183-185,192-194
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.1",
+  "base_commit_sha": "c0a336b3eb9b882b4736a949bbde6f81689bb559",
+  "prompts": {},
+  "humans": {
+    "h_2ce1fc5d409307": {
+      "author": "haithamshahin333 <42976403+haithamshahin333@users.noreply.github.com>"
+    }
+  },
+  "sessions": {
+    "s_1b20c4ed9cc52a": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "2fdcf00a-35df-4df7-be35-3b1c56036590",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "haithamshahin333 <42976403+haithamshahin333@users.noreply.github.com>"
+    }
+  }
+}
