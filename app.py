@@ -4,6 +4,9 @@ The agent itself runs inside the LangGraph **Agent Server** (start it with
 ``langgraph dev``). This file is a thin **client** over that server's REST API,
 using the LangGraph SDK — it does not import or run the graph in-process.
 
+This is the **async** variant: the Gradio handler is an ``async def`` generator
+and the LangGraph SDK's async client (`get_client`) streams with ``async for``.
+
 Run order:
     1. Terminal A:  langgraph dev          # serves the agent at :2024
     2. Terminal B:  python app.py          # opens the Gradio chat UI
@@ -13,7 +16,7 @@ import os
 
 import gradio as gr
 from dotenv import load_dotenv
-from langgraph_sdk import get_sync_client
+from langgraph_sdk import get_client
 
 load_dotenv()
 
@@ -22,7 +25,19 @@ load_dotenv()
 LANGGRAPH_URL = os.environ.get("LANGGRAPH_URL", "http://127.0.0.1:2024")
 ASSISTANT = "agent"  # the graph id declared in langgraph.json
 
-client = get_sync_client(url=LANGGRAPH_URL)
+# The async client wraps an httpx.AsyncClient that binds to the event loop it is
+# first used on. We create it LAZILY — inside the async handler, on Gradio's
+# server loop — rather than at import time, so it never binds to the wrong loop.
+_client = None
+
+
+def _client_for_loop():
+    """Return the process-wide async client, creating it on first use."""
+    global _client
+    if _client is None:
+        _client = get_client(url=LANGGRAPH_URL)
+    return _client
+
 
 # One LangGraph thread per Gradio session. The Agent Server's checkpointer holds
 # the conversation history, so each turn sends ONLY the new user message — we do
@@ -48,15 +63,18 @@ def _text(msg) -> str:
     return content or ""
 
 
-def chat(message: str, history, request: gr.Request):
-    """Gradio streaming handler: relay one user turn to the agent, yield tokens."""
+async def chat(message: str, history, request: gr.Request):
+    """Gradio async streaming handler: relay one user turn, yield tokens."""
+    client = _client_for_loop()
+
     thread_id = _threads.get(request.session_hash)
     if not thread_id:
-        thread_id = client.threads.create()["thread_id"]
+        thread = await client.threads.create()
+        thread_id = thread["thread_id"]
         _threads[request.session_hash] = thread_id
 
     accumulated = ""
-    for part in client.runs.stream(
+    async for part in client.runs.stream(
         thread_id,
         ASSISTANT,
         input={"messages": [{"role": "user", "content": message}]},
