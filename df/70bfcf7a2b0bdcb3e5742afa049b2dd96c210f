@@ -1,0 +1,24 @@
+app.py
+  s_1b20c4ed9cc52a::t_ee4cf3b93e7ef1 7-9,19,28-40,66-69,72-73,77
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.1",
+  "base_commit_sha": "df70bfcf7a2b0bdcb3e5742afa049b2dd96c210f",
+  "prompts": {},
+  "humans": {
+    "h_2ce1fc5d409307": {
+      "author": "haithamshahin333 <42976403+haithamshahin333@users.noreply.github.com>"
+    }
+  },
+  "sessions": {
+    "s_1b20c4ed9cc52a": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "2fdcf00a-35df-4df7-be35-3b1c56036590",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "haithamshahin333 <42976403+haithamshahin333@users.noreply.github.com>"
+    }
+  }
+}
